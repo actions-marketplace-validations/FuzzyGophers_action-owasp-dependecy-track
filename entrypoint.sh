@@ -103,10 +103,12 @@ case $LANGUAGE in
         fi
 
         # Use main branch for now
-        pwd
+        echo "[*] GOPATH"
         go env GOPATH
-        go get github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest && cp ~/go/bin/cyclonedx-gomod /usr/bin/
-
+        go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest && cp ~/go/bin/cyclonedx-gomod /usr/bin/
+        echo "[*] List ~/go/bin"
+        ls ~/go/bin
+        
         path="bom.xml"
         BoMResult=$(cyclonedx-go -o bom.xml)
         ;;
