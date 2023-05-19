@@ -9,7 +9,7 @@ RUN apt-get update \
     && apt-get install --no-install-recommends -y git npm golang \
     curl jq build-essential apt-transport-https unzip \
     libc6 libgcc1 libgssapi-krb5-2 libicu66 libssl1.1 libstdc++6 zlib1g \
-    && apt-get update \
+    && apt-get update
 
 # RUN mkdir /home/dtrack && cd /home/dtrack && git clone git@github.com:SCRATCh-ITEA3/dtrack-demonstrator.git
 # TODO: Update to official package from CycloneDX
