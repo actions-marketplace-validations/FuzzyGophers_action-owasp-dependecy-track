@@ -101,6 +101,10 @@ case $LANGUAGE in
             echo "[-] Error executing go build. Stopping the action!"
             exit 1
         fi
+
+        # Use main branch for now
+        go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest && cp /root/go/bin/cyclonedx-go /usr/bin/
+
         path="bom.xml"
         BoMResult=$(cyclonedx-go -o bom.xml)
         ;;
