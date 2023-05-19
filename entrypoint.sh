@@ -110,7 +110,7 @@ case $LANGUAGE in
         ls ~/go/bin
         
         path="bom.xml"
-        BoMResult=$(cyclonedx-go -o bom.xml)
+        BoMResult=$(cyclonedx-gomod -o bom.xml)
         ;;
 
     "java")
