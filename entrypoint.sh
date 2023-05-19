@@ -104,7 +104,7 @@ case $LANGUAGE in
 
         # Use main branch for now
         pwd
-        ls /root
+        go env GOPATH
         go get github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest && cp ~/go/bin/cyclonedx-gomod /usr/bin/
 
         path="bom.xml"
