@@ -1,5 +1,5 @@
-# action-owasp-dependecy-track-check
-This Github action generates a BoM (Bill Of Materials) of your project and uploads it to an OWASP Dependency Track instance to perform a vulnerability check. In order to use it, you will need an OWASP Dependency Track instance and an access Key to be able to use the REST API from Internet. 
+# action-owasp-dependecy-track
+This Github action generates a SBOM (Software Bill Of Materials) of your project and uploads it to an OWASP Dependency Track instance. In order to use it, you will need an OWASP Dependency Track instance and an access key.
 
 One of the main advantages is that you can customize the vulnerability check sources Dependency Track will use, you can easily check the project status of the different versions using the Dependency Track WUI and you can also check the licenses of the different libraries you project is using. 
 
@@ -36,47 +36,7 @@ Please note that if any of the files above is not available the action will fail
 ## How to use it
 Github provides really helpful resources to learn to include any action in your workflow. This [Introduction to actions](https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions) may be specially useful for beginners. However, we've add some of the steps you'll have to go through in order to get it up and running. You can also check this [video (OWASP Dependency Track check: how to use it in Maven projects)](https://www.youtube.com/watch?v=L9ItYhv37wo&t=3s).
 
-**Step 0: Add CycloneDX plugin to your project (only Maven/Java projects)**
-+ Get the cyclonedx-maven-plugin. 
-From the [cyclonedx-maven-plugin](https://github.com/CycloneDX/cyclonedx-maven-plugin) repository you'll be able to get the code below. The default information of the plugin shown below is more extense (you could use the simplified one), but this will allow you to modify some useful parameters later on.
-```xml
-<plugin>
-        <groupId>org.cyclonedx</groupId>
-        <artifactId>cyclonedx-maven-plugin</artifactId>
-        <version>2.5.2</version>
-        <executions>
-            <execution>
-                <phase>package</phase>
-                <goals>
-                    <goal>makeAggregateBom</goal>
-                </goals>
-            </execution>
-        </executions>
-        <configuration>
-            <projectType>library</projectType>
-            <schemaVersion>1.3</schemaVersion>
-            <includeBomSerialNumber>true</includeBomSerialNumber>
-            <includeCompileScope>true</includeCompileScope>
-            <includeProvidedScope>true</includeProvidedScope>
-            <includeRuntimeScope>true</includeRuntimeScope>
-            <includeSystemScope>true</includeSystemScope>
-            <includeTestScope>false</includeTestScope>
-            <includeLicenseText>false</includeLicenseText>
-            <outputFormat>all</outputFormat>
-            <outputName>bom</outputName>
-        </configuration>
-    </plugin>
-```
-
-
-+ Edit your `pom.xml` file by adding the plugin. 
-Paste the code shown above into the `plugins` secction of your project's pom.xml. For more info visit [here](https://maven.apache.org/guides/mini/guide-configuring-plugins.html). 
-
-![alt text](./docs/cyclonedx-maven-plugin%20install.png)
-
-Note that you must **change** the `<phase>` tag value to `compile` (`package` by default), otherwise the action won't even generate the bom.xml. This action will compile your Maven Java project and expects to find a resulting `bom.xml`. 
-
-**Step 1: Get your Dependency Track both URL and Key**
+**Step 1: Get your Dependency Track URL and Access Key**
 
 This will let you use the API to upload your projects' bom.xml from this GitHub action.
 + How to get your Key. Go to Configuration -> Teams -> Create Team to create a new team. This will also create a corresponding API Key, although a team might have multiple Keys. You can find more info about this [here](https://docs.dependencytrack.org/integrations/rest-api/).

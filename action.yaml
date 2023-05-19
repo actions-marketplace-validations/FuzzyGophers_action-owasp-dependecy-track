@@ -1,6 +1,6 @@
 # action.yml
-name: 'OWASP Dependency Track check'
-description: 'Creates BoM and upload repository to OWASP Dependency Track to find vulnerabilities'
+name: 'OWASP Dependency Track Check'
+description: 'Create SBOM and upload to OWASP Dependency Track'
 branding:
   icon: 'check-square'
   color: 'green'
@@ -9,7 +9,7 @@ inputs:
   url:
     description: 'URL of OWASP Dependency Track REST API'
     required: true
-    default: 'https://dtrack.quobis.com/'
+    default: 'https://deptrack.example.com/'
   key:
     description: 'Key to access OWASP Dependency Track REST API'
     required: true
@@ -17,17 +17,17 @@ inputs:
   language:
     description: 'Programming language'
     required: true
-    default: 'nodejs'
+    default: 'golang'
   delete:
     description: 'Delete project'
     required: false
     default: 'false'
   fail_on_critical:
-    description: 'Fail on criticals'
+    description: 'Fail on Critical vulnerabilities'
     required: false
     default: 'false'
   fail_on_high:
-    description: 'Fail on highs'
+    description: 'Fail on High vulnerabilities'
     required: false
     default: 'false'
 
