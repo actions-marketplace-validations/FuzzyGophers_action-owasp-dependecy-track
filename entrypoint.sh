@@ -103,14 +103,11 @@ case $LANGUAGE in
         fi
 
         # Use main branch for now
-        echo "[*] GOPATH"
-        go env GOPATH
         go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest && cp ~/go/bin/cyclonedx-gomod /usr/bin/
-        echo "[*] List ~/go/bin"
-        ls ~/go/bin
         
         path="bom.xml"
-        BoMResult=$(cyclonedx-gomod -o bom.xml)
+        # TODO: make licenses configurable
+        BoMResult=$(cyclonedx-gomod mod -licenses -type library -output bom.xml)
         ;;
 
     "java")
