@@ -18,14 +18,14 @@ cd $GITHUB_WORKSPACE
 
 # Run check for delete variable first so that install doesn't need to be run
 PROJECT=$(curl -X GET -G --data-urlencode "name=$GITHUB_REPOSITORY"  \
-                         --data-urlencode "version=$GITHUB_HEAD_REF" \
+                         --data-urlencode "version=$GITHUB_SHA" \
                          "$DTRACK_URL/api/v1/project/lookup" -H  "accept: application/json" -H  "X-Api-Key: $DTRACK_KEY")
 PROJECT_EXISTS=$(echo $PROJECT | jq ".active")
 if [[ -n "$PROJECT_EXISTS" ]]; then
     PROJECT_UUID=$(echo $PROJECT | jq -r ".uuid")
 else
     PROJECT_UUID=$(curl \
-        -d "{  \"name\": \"$GITHUB_REPOSITORY\",  \"version\": \"$GITHUB_HEAD_REF\"}" \
+        -d "{  \"name\": \"$GITHUB_REPOSITORY\",  \"version\": \"$GITHUB_SHA\"}" \
         -X PUT "$DTRACK_URL/api/v1/project" \
         -H  "accept: application/json" \
         -H  "Content-Type: application/json" \
@@ -137,13 +137,14 @@ echo "[*] BoM file succesfully generated"
 echo "[*] Cyclonedx CLI conversion"
 
 # UPLOAD BoM to Dependency track server
+# TODO: Note autoCreate requires appropriate permissions and create variable
 echo "[*] Uploading BoM file to Dependency Track server"
 upload_bom=$(curl $INSECURE $VERBOSE -s --location --request POST $DTRACK_URL/api/v1/bom \
 --header "X-Api-Key: $DTRACK_KEY" \
 --header "Content-Type: multipart/form-data" \
 --form "autoCreate=true" \
 --form "projectName=$GITHUB_REPOSITORY" \
---form "projectVersion=$GITHUB_HEAD_REF" \
+--form "projectVersion=$GITHUB_SHA" \
 --form "bom=@bom.xml")
 
 
@@ -178,7 +179,7 @@ echo "[*] Waiting to allow score generation"
 sleep 60
 
 echo "[*] Retrieving project information"
-project=$(curl  $INSECURE $VERBOSE -s --location --request GET "$DTRACK_URL/api/v1/project/lookup?name=$GITHUB_REPOSITORY&version=$GITHUB_HEAD_REF" \
+project=$(curl  $INSECURE $VERBOSE -s --location --request GET "$DTRACK_URL/api/v1/project/lookup?name=$GITHUB_REPOSITORY&version=$GITHUB_SHA" \
 --header "X-Api-Key: $DTRACK_KEY")
 
 echo "-----PROJECT-------"
