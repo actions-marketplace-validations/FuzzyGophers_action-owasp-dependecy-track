@@ -11,10 +11,6 @@ RUN apt-get update \
     libc6 libgcc1 libgssapi-krb5-2 libicu66 libssl1.1 libstdc++6 zlib1g \
     && apt-get update
 
-# RUN mkdir /home/dtrack && cd /home/dtrack && git clone git@github.com:SCRATCh-ITEA3/dtrack-demonstrator.git
-# TODO: Update to official package from CycloneDX
-RUN go get github.com/ozonru/cyclonedx-go/cmd/cyclonedx-go && cp /root/go/bin/cyclonedx-go /usr/bin/
-
 # TODO: Update binary to latest
 COPY cyclonedx-linux-x64 /usr/bin/cyclonedx-cli
 RUN chmod +x /usr/bin/cyclonedx-cli
