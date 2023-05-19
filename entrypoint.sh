@@ -103,7 +103,9 @@ case $LANGUAGE in
         fi
 
         # Use main branch for now
-        go get github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest && cp /root/go/bin/cyclonedx-gomod /usr/bin/
+        pwd
+        ls /root
+        go get github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest && cp ~/go/bin/cyclonedx-gomod /usr/bin/
 
         path="bom.xml"
         BoMResult=$(cyclonedx-go -o bom.xml)
